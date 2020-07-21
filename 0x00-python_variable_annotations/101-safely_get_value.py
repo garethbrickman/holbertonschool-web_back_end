@@ -4,7 +4,6 @@
 from typing import Dict
 
 
-# The types of the elements of the input are not know
 def safely_get_value(dct, key, default = None):
     """ Duck-typing """
     if key in dct:
