@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ Correcting mypy errors """
 
-
 from typing import Tuple, List
+
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """ zoom array """
