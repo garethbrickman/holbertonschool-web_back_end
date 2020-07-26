@@ -8,9 +8,12 @@ class BasicCache(BaseCaching):
     """ Dict caching system """
 
     def put(self, key, item):
-        """ puts """
-        pass
+        """ Add an item in the cache """
+        if key is None or item is None:
+            pass
+        else:
+            self.cache_data[key] = item
 
     def get(self, key):
-        """ gets """
-        pass
+        """ Get an item by key """
+        return self.cache_data.get(key)
