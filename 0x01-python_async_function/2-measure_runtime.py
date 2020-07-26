@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-""" Takes int arg, waits for random delay """
+""" Measures total execution time """
 
 import asyncio
 import random
-wait_random = __import__('0-basic_async_syntax').wait_random
+import time
+wait_n = __import__('1-concurrent_coroutines').wait_n
 
 
-async def wait_random(max_delay: int = 10) -> float:
-    """ Waits for random delay between 0 and max_delay, returns that """
-    actual_delay: float = random.uniform(0, max_delay)
-    await asyncio.sleep(actual_delay)
-    return actual_delay
+def measure_time(n: int, max_delay: int = 10) -> float:
+    """ Returns total_time / n for wait_n() execution """
+
+    elapsed_time: float
+
+    start_time = time.perf_counter()
+    asyncio.run(wait_n(n, max_delay))
+    elapsed_time = time.perf_counter() - start_time
+    return elapsed_time / n
