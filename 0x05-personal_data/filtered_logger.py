@@ -2,9 +2,10 @@
 """ Protecting PII """
 
 from typing import List
-import re
 import logging
-
+import mysql.connector
+import os
+import re
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
 
@@ -22,6 +23,19 @@ def filter_datum(fields: List[str], redaction: str,
 def get_logger() -> logging.Logger:
     """ Returns logger obj  """
     return logging.getLogger('user_data')
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ Connects to MySQL db using env vars """
+    user = os.environ.get('PERSONAL_DATA_DB_USERNAME', None)
+    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', None)
+    db_host = os.environ.get('PERSONAL_DATA_DB_HOST', None)
+    db_name = os.environ.get('PERSONAL_DATA_DB_NAME', None)
+
+    return mysql.connector.connect(user=user,
+                                   password=password,
+                                   host=db_host,
+                                   database=db_name)
 
 
 class RedactingFormatter(logging.Formatter):
