@@ -18,12 +18,17 @@ if getenv("AUTH_TYPE") == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.before_request
 def request_filter() -> None:
     """ Checks if request needs authorization
     """
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-    
+    excluded_paths = [
+        '/api/v1/status/',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/'
+        ]
+
     if auth:
         if auth.require_auth(request.path, excluded_paths):
             if auth.authorization_header(request) is None:
