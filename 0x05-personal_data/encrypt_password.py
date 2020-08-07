@@ -4,7 +4,7 @@
 import bcrypt
 
 
-def hash_password(password: str) -> str:
+def hash_password(password: str) -> bytes:
     """ Takes in string arg, converts to unicode
     Returns salted, hashed pswd as bytestring
     """
