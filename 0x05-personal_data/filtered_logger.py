@@ -12,9 +12,11 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """ returns the log message obfuscated """
+    temp = message
     for field in fields:
-        return re.sub(field + "=.*?" + separator,
-                      field + "=" + redaction + separator, message)
+        temp = re.sub(field + "=.*?" + separator,
+                      field + "=" + redaction + separator, temp)
+    return temp
 
 
 def get_logger() -> logging.Logger:
