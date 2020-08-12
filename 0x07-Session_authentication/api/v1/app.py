@@ -17,6 +17,9 @@ auth = None
 if getenv("AUTH_TYPE") == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
+elif getenv("AUTH_TYPE") == 'session_auth':
+    from api.v1.auth.session_auth import SessionAuth
+    auth = SessionAuth()
 else:
     from api.v1.auth.auth import Auth
     auth = Auth()
@@ -39,7 +42,6 @@ def request_filter() -> None:
             request.current_user = auth.current_user(request) 
             if auth.current_user(request) is None:
                 abort(403)
-
 
 @app.errorhandler(404)
 def not_found(error) -> str:
