@@ -19,10 +19,12 @@ def session_logout() -> str:
     """
     from api.v1.app import auth
 
-    if auth.destroy_session(request):
-        return jsonify({}), 200
-    else:
+    try:
+        auth.destroy_session(request)
+    except Exception:
         abort(404)
+    else:
+        return jsonify({}), 200
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
