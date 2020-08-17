@@ -26,7 +26,7 @@ class Auth:
         """ Registers and returns a new user if email isn't listed"""
         try:
             self._db.find_user_by(email=email)
-            raise ValueError("User {} already exists".format(email))
+            raise ValueError("User {:s} already exists".format(email))
         except Exception:
             new_user = self._db.add_user(email, _hash_password(password))
             return new_user
