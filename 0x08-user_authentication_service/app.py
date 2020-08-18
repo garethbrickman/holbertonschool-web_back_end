@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Route module for the API """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 
 from auth import Auth
 
