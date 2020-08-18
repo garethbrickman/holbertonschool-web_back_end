@@ -27,7 +27,7 @@ def users() -> str:
       - JSON payload
     """
 
-    # form-data uses request.form, body JSON uses request.get_json()
+    """ form-data uses request.form, body JSON uses request.get_json() """
     form_data = request.get_json()
 
     if "email" not in form_data:
@@ -36,19 +36,17 @@ def users() -> str:
         return jsonify({"message": "password required"}), 400
     else:
 
-        email = form_data["email"]
-        pswd = form_data["password"]
+        data_email = form_data["email"]
+        data_pswd = form_data["password"]
 
         try:
-            new_user = AUTH.register_user(email, pswd)
+            new_user = AUTH.register_user(data_email, data_pswd)
             return jsonify({
                 "email": new_user.email,
                 "message": "user created"
             }), 201
         except ValueError:
-            return jsonify({
-                "message": "email already registered"
-                }), 400
+            return jsonify({"message": "email already registered"}), 400
 
 
 if __name__ == "__main__":
