@@ -47,7 +47,7 @@ def new_user() -> str:
             }), 201
         except ValueError:
             return jsonify({
-                "message": "user already registered with this email"
+                "message": "email already registered"
                 }), 400
 
 
