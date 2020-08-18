@@ -19,7 +19,7 @@ def status() -> str:
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def new_user() -> str:
+def users() -> str:
     """ POST /users
     Registers new user with email and pswd in request form-data,
     or finds if user already registered based on email
