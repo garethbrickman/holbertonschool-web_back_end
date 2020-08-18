@@ -4,8 +4,9 @@ from flask import Flask, jsonify, request
 
 from auth import Auth
 
-AUTH = Auth()
+
 app = Flask(__name__)
+AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
@@ -26,8 +27,8 @@ def new_user() -> str:
       - JSON payload
     """
 
-    # Get data from form request, change to request.get_json() for body
-    form_data = request.form
+    # form-data uses request.form, body JSON uses request.get_json()
+    form_data = request.get_json()
 
     if "email" not in form_data:
         return jsonify({"message": "email required"}), 400
