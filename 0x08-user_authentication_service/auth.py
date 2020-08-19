@@ -38,4 +38,3 @@ class Auth:
             return checkpw(password.encode('utf-8'), found_user.hashed_password)
         except NoResultFound:
             return False
-
