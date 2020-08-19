@@ -84,8 +84,8 @@ def login() -> str:
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> None:
-    """ DELEZTE /sessions
-    Destroys session by finding session_id as key in cookie
+    """ DELETE /sessions
+    Destroys session by finding session_id (key in cookie)
     Return:
       - Redirects user to status route (GET /)
     """
@@ -93,11 +93,11 @@ def logout() -> None:
     if not session_id:
         return jsonify({"message": "session_id in cookie required"}), 400
 
-    user = AUTH.get_user_from_session_id(session_id)
-    if user:
-        AUTH.destroy_session(user)
+    try:
+        user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(user.id)
         return redirect(url_for('status'))
-    else:
+    except NoResultFound:
         abort(403)
 
 
