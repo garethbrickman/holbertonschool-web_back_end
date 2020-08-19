@@ -90,12 +90,14 @@ def logout() -> None:
       - Redirects user to status route (GET /)
     """
     session_id = request.cookies.get('session_id')
+    if not session_id:
+        return jsonify({"message": "session_id in cookie required"}), 400
 
-    try:
-        user = AUTH.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
         AUTH.destroy_session(user)
         return redirect(url_for('status'))
-    except NoResultFound:
+    else:
         abort(403)
 
 
