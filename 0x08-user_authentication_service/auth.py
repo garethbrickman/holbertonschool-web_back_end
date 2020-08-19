@@ -86,8 +86,8 @@ class Auth:
         """ Finds user by email, updates user's reset_toke with UUID """
         try:
             found_user = self._db.find_user_by(email=email)
-        except ValueError:
-            return None
+        except NoResultFound:
+            raise ValueError
 
         reset_token = _generate_uuid()
         self._db.update_user(found_user.id, reset_token=reset_token)
