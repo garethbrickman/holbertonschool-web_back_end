@@ -11,8 +11,8 @@ AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def status() -> str:
-    """ GET /status
+def index() -> str:
+    """ GET /
     Return:
       - JSON payload
     """
@@ -94,7 +94,28 @@ def logout() -> None:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
             AUTH.destroy_session(user.id)
-            return redirect(url_for('status'))
+            return redirect(url_for('index'))
+    else:
+        abort(403)
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """ GET /profile
+    Finds user's info by finding session_id (key in cookie)
+    Return:
+      - JSON payload
+    """
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        try:
+            user = AUTH.get_user_from_session_id(session_id)
+            if user:
+                return jsonify({"email": user.email}), 200
+            else:
+                abort(403)
+        except NoResultFound:
+            abort(403)
     else:
         abort(403)
 
