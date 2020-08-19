@@ -93,11 +93,11 @@ def logout() -> None:
     if not session_id:
         return jsonify({"message": "session_id in cookie required"}), 400
 
-    try:
-        user = AUTH.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
         AUTH.destroy_session(user.id)
         return redirect(url_for('status'))
-    except NoResultFound:
+    else:
         abort(403)
 
 
