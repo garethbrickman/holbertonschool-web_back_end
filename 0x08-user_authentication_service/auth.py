@@ -104,3 +104,4 @@ class Auth:
             found_user.id,
             hashed_password=new_pswd,
             reset_token=None)
+        return None
