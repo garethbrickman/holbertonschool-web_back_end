@@ -41,7 +41,7 @@ class TestGetJson(unittest.TestCase):
     ])
     def test_get_json(self, test_url, test_payload):
         """ Test method returns correct output """
-        # set mock response to have return value of test payload
+        # create Mock object with json method that returns test_payload
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         # function calls requests.get, need patch to get mock return value
