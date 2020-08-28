@@ -29,6 +29,12 @@ def index() -> str:
     return render_template('1-index.html')
 
 
+@babel.localeselector
+def get_locale():
+    """ Determines best match for supported languages """
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
