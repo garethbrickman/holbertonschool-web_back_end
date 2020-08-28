@@ -5,18 +5,19 @@ from flask_babel import Babel
 from os import getenv
 
 app = Flask(__name__)
-app.config.from_object('Config')
+babel = Babel(app)
 
 
 class Config(object):
     """ Babel configuration """
     LANGUAGES = ['en', 'fr']
-    # these are the inherent defaults
-    BABEL_DEFAULT_LOCALE = ['en']
-    BABEL_DEFAULT_TIMEZONE = ['UTC']
+    # these are the inherent defaults just btw
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
-babel = Babel(app)
+# set the above class object as the configuration for the app
+app.config.from_object('1-app.Config')
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
