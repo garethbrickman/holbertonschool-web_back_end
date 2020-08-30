@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """ Route module for the API """
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g
 from flask_babel import Babel
 from os import getenv
+from typing import Union
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -46,6 +47,23 @@ def get_locale() -> str:
             return locale
     else:
         return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+def get_user() -> Union[dict, None]:
+    """ Returns user dict if ID can be found """
+    if request.args.get('login_as'):
+        # have to type cast  the param to be able to search the user dict
+        user = int(request.args.get('login_as'))
+        if user in users:
+            return users.get(user)
+    else:
+        return None
+
+
+@app.before_request
+def before_request():
+    """ Finds user and sets as global on flask.g.user """
+    g.user = get_user()
 
 
 if __name__ == "__main__":
