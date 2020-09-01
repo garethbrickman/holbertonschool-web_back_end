@@ -27,11 +27,9 @@ class Cache:
         """ Returns data converted to desired format """
         # default Redis.get in case key does not exist
         data = self._redis.get(key)
-
         # use callable if one provided
         if fn:
             data = fn(data)
-
         return data
 
     def get_str(self, data: bytes) -> str:
