@@ -2,7 +2,8 @@
 """ Module for Redis db """
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Union, Callable, Optional
+from sys import byteorder
 
 
 class Cache:
@@ -20,3 +21,23 @@ class Cache:
         # use pipelining for multi sets, mset() is not approrpiate for a cache
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None)\
+            -> Union[str, bytes, int, float]:
+        """ Returns data converted to desired format """
+        # default Redis.get in case key does not exist
+        data = self._redis.get(key)
+
+        # use callable if one provided
+        if fn:
+            data = fn(data)
+
+        return data
+
+    def get_str(self, data: bytes) -> str:
+        """ Convert bytes to str """
+        return data.decode('utf-8')
+
+    def get_int(self, data: bytes) -> int:
+        """ Convert bytes to int """
+        return int.from_bytes(data, byteorder)
