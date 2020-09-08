@@ -1,2 +1,2 @@
-// adds new attribute to doc with specified field
-db.school.update( { name: "Holberton school" },  { $set: { address: "972 Mission street" } } );
+// adds new attribute to doc with all specified field
+db.school.updateMany( { name: "Holberton school" },  { $set: { address: "972 Mission street" } } );
