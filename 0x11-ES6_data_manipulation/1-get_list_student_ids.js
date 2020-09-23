@@ -1,3 +1,6 @@
 export default function getListStudentIds(students) {
-  return students.map((items) => items.id);
+  // check arg is an array before using map
+  if (Object.getPrototypeOf(students) === Array.prototype) {
+    return students.map((items) => items.id);
+  } return [];
 }
