@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 export default function cleanSet(set, startString) {
   const strings = [];
+=======
+/* export default function cleanSet(set, startString) { */
+function cleanSet() {
+  let set = new Set(['bonjovi', 'bonaparte', 'bonappetit', 'banana']);
+  let startString = 'bon';
+>>>>>>> parent of b7dbf8a... Remove test lines
   if (startString && typeof startString === 'string') {
     for (const item of set) {
       if (item.startsWith(startString)) {
@@ -11,3 +18,4 @@ export default function cleanSet(set, startString) {
   strings.push(''.slice(0, -1));
   return strings;
 }
+console.log(cleanSet());
