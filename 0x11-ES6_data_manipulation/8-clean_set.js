@@ -1,7 +1,4 @@
-/* export default function cleanSet(set, startString) { */
-function cleanSet() {
-  let set = new Set(['bonjovi', 'bonaparte', 'bonappetit', 'banana']);
-  let startString = 'bon';
+export default function cleanSet(set, startString) {
   if (startString && typeof startString === 'string') {
     const strings = [];
     for (const item of set) {
@@ -13,4 +10,3 @@ function cleanSet() {
   }
   return '';
 }
-console.log(cleanSet());
