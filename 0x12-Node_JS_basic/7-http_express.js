@@ -1,5 +1,57 @@
 const express = require('express');
+const fs = require('fs');
 
+async function countStudents(filepath) {
+  try {
+    const csv = await fs.promises.readFile(filepath, { encoding: 'utf8' });
+    const headerArray = csv.split(/\r?\n|\n/);
+    const headers = headerArray[0].split(',');
+
+    // strip headers and convert to list of dicts
+    const dictList = [];
+    const noHeaderArray = headerArray.slice(1);
+    for (let i = 0; i < noHeaderArray.length; i += 1) {
+      const data = noHeaderArray[i].split(',');
+      if (data.length === headers.length) {
+        const row = {};
+        for (let j = 0; j < headers.length; j += 1) {
+          row[headers[j].trim()] = data[j].trim();
+        }
+        dictList.push(row);
+      }
+    }
+
+    // count and collect first names of students per field
+    let countCS = 0;
+    let countSWE = 0;
+    const studentsCS = [];
+    const studentsSWE = [];
+
+    dictList.forEach((element) => {
+      if (element.field === 'CS') {
+        countCS += 1;
+        studentsCS.push(element.firstname);
+      } else if (element.field === 'SWE') {
+        countSWE += 1;
+        studentsSWE.push(element.firstname);
+      }
+    });
+
+    const countStudents = countCS + countSWE;
+
+    return ({
+      countStudents,
+      countCS,
+      countSWE,
+      studentsCS,
+      studentsSWE,
+    });
+  } catch (err) {
+    throw new Error('Cannot load the database');
+  }
+}
+
+const pathToDB = process.argv[2];
 const app = express();
 const port = 1245;
 
@@ -8,7 +60,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/students', (req, res) => {
-  res.end('This is the list of our students');
+  // call async function and collect needed variables
+  countStudents(pathToDB)
+    .then(({
+      countStudents,
+      countCS,
+      countSWE,
+      studentsCS,
+      studentsSWE,
+    }) => {
+      const text = 'This is the list of our students\n';
+      const total = `Number of students: ${countStudents}\n`;
+      const CS = `Number of students in CS: ${countCS}. List: ${studentsCS.toString().split(',').join(', ')}\n`;
+      const SWE = `Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`;
+      res.send(text + total + CS + SWE);
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 app.listen(port);
