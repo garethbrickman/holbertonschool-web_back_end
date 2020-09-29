@@ -21,8 +21,6 @@ function countStudents(filepath) {
     }
 
     // count and collect first names of students per field
-    const countStudents = Object.keys(dictList).length;
-
     let countCS = 0;
     let countSWE = 0;
     const studentsCS = [];
@@ -38,10 +36,12 @@ function countStudents(filepath) {
       }
     });
 
+    const countStudents = countCS + countSWE;
+
     // print statements
     console.log(`Number of students: ${countStudents}`);
     console.log(`Number of students in CS: ${countCS}. List: ${studentsCS.toString().split(',').join(', ')}`);
-    console.log(`Number of students in CS: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`);
+    console.log(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`);
   } catch (err) {
     throw new Error('Cannot load the database');
   }
