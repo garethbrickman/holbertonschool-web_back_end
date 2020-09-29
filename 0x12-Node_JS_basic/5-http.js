@@ -76,8 +76,9 @@ const app = http.createServer((req, res) => {
         res.write(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`);
         res.end();
       })
-      .catch((err) => {
-        throw err;
+      .catch(() => {
+        res.end('Error: Cannot load the database');
+        throw new Error('Cannot load the database');
       });
   }
 });
