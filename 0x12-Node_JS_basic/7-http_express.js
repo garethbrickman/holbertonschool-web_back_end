@@ -75,8 +75,9 @@ app.get('/students', (req, res) => {
       const SWE = `Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`;
       res.send(text + total + CS + SWE);
     })
-    .catch((err) => {
-      throw err;
+    .catch(() => {
+      res.send('Cannot load the database');
+      throw new Error('Cannot load the database');
     });
 });
 
