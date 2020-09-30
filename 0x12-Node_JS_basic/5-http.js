@@ -73,7 +73,7 @@ const app = http.createServer((req, res) => {
       }) => {
         res.write(`Number of students: ${countStudents}\n`);
         res.write(`Number of students in CS: ${countCS}. List: ${studentsCS.toString().split(',').join(', ')}\n`);
-        res.write(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}\n`);
+        res.write(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`);
         res.end();
       })
       .catch(() => {
