@@ -61,6 +61,7 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
+    res.write('This is the list of our students\n');
     // call async function and collect needed variables
     countStudents(pathToDB)
       .then(({
@@ -70,10 +71,9 @@ const app = http.createServer((req, res) => {
         studentsCS,
         studentsSWE,
       }) => {
-        res.write('This is the list of our students\n');
         res.write(`Number of students: ${countStudents}\n`);
         res.write(`Number of students in CS: ${countCS}. List: ${studentsCS.toString().split(',').join(', ')}\n`);
-        res.write(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}`);
+        res.write(`Number of students in SWE: ${countSWE}. List: ${studentsSWE.toString().split(',').join(', ')}\n`);
         res.end();
       })
       .catch(() => {
