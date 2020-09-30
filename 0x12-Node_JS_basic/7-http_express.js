@@ -76,8 +76,7 @@ app.get('/students', (req, res) => {
       res.send(text + total + CS + SWE);
     })
     .catch(() => {
-      res.send('Error: Cannot load the database');
-      throw new Error('Cannot load the database');
+      res.status(404).send('Cannot load the database');
     });
 });
 
